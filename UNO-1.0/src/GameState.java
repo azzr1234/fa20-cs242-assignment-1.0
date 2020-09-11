@@ -1,3 +1,4 @@
+import java.util.*;
 /*
  * Class representing the state of the game. Inherits Player and Card class
  * 
@@ -39,13 +40,18 @@ public class GameState {
 	Deck playableDeck;
 	Deck discardDeck;
 	int playableDeckCount;
-	int discardDeckCount;
+
+	LinkedList<Player> players = new LinkedList<Player>();
 	public GameState() {};
 	public GameState(int total_players, int direction){
 		totalPlayers = total_players;
 		current_direction = direction;
 		
 	}
+	void wild_card_played() {
+		
+	}
+	
 	//If a reverse card is used, it should alert players of new direction
 	void alert_new_direction() {
 		this.current_direction *= -1;
@@ -53,9 +59,12 @@ public class GameState {
 	}
 	
 	//If a wild card is played, it should alert players or new color
-	void alert_new_color() {
-		//change into new color
-		System.out.println(this.current_color);
+	void alert_new_color_and_card_num_value() {
+		ListIterator<Player> listIterator = players.listIterator();
+		while (listIterator.hasNext()) {
+			listIterator.next().last_played_card_in_game = discardDeck.peek();
+		}
+		
 	}
 	
 	//When a card is played it should display the card to all other players
@@ -74,17 +83,16 @@ public class GameState {
 	
 	
 	//playable deck should be updated after a card is drawn. card should be taken out. count should be decreased
-	void pull_from_playable_deck() {
+	Card pull_from_playable_deck() {
 		Card current = playableDeck.pop();
 		this.subtract_from_playable_deck();
-		update_current_color_and_number();
-		this.add_to_discard_deck_and_update_count(current);
+		return current;
 	}
 	
 	//discard deck should be updated after a card is added. card should be added. count should be increased
-	void add_to_discard_deck_and_update_count(Card card_to_add) {
+	void add_to_discard_deck_and_update_current_card(Card card_to_add) {
 		this.discardDeck.push(card_to_add);
-		this.discardDeckCount += 1;
+		update_current_color_and_number();
 	}
 	//Any time a card is taken from the deck, it need to be popped and into the players hand
 	void subtract_from_playable_deck() {
