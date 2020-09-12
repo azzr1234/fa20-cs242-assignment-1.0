@@ -8,6 +8,7 @@ import java.util.*;
  * --> Blue = 1
  * --> Green = 2
  * --> Yellow = 3
+ * --> No Color = 4 == Wild Card/Wild Draw 4
  * @param card_val --> The number on the card; If the card value is a special card(Draw 2, reverse, Skip, Wild, Wild+4) It will have different values
  * --> 0-9 = 0-9
  * --> Skip Next = 10 
@@ -62,12 +63,18 @@ public class Card {
 }
 
 class RegularCard extends Card{
-	public RegularCard() {};
+	public RegularCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+
+	};
 }
 
 // Reverse the direction of play
 class ReverseCard extends Card{
-	public ReverseCard() {};
+	public ReverseCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+
+	};
 	void changeDirectionofPlay() {
 		
 	}
@@ -75,7 +82,9 @@ class ReverseCard extends Card{
 
 //The next person is skipped in turn
 class SkipCard extends Card{
-	public SkipCard() {};
+	public SkipCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+	};
 	void skipNextPlayer() {
 		
 	}
@@ -83,7 +92,9 @@ class SkipCard extends Card{
 
 //The next person draws 2 cards from the playable deck and misses turn
 class DrawTwoCard extends Card{
-	public DrawTwoCard() {};
+	public DrawTwoCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+	};
 	void drawTwo(){
 	
 	}
@@ -91,7 +102,10 @@ class DrawTwoCard extends Card{
 
 //New color is chosen by the player. New color can be the same as old color
 class WildCard extends Card{
-	public WildCard() {};
+	public WildCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+
+	};
 	void changeColor() {
 		
 	}
@@ -101,7 +115,9 @@ class WildCard extends Card{
 //Bonus point: +0.5 if implement the following rule:
 //“Wild Draw Four” card can only be played if the player has no cards matching the current color
 class WildDrawFourCard extends Card{
-	public WildDrawFourCard() {};
+	public WildDrawFourCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+	};
 	void changeColorPlusFour() {
 		
 	}
@@ -118,98 +134,103 @@ class WildDrawFourCard extends Card{
  */
 
 class Deck extends Card {
-	
+	private Stack<Card> deck;
+
 	public Deck() {
-		Stack<Card> deck = new Stack<Card>();
+		deck = new Stack<Card>();
+
 		//or
 		
-		createRegularCards(76); // 19 for each color * 4 for each color = 76 cards
+		createRegularCards(deck, 76); // 19 for each color * 4 for each color = 76 cards
 		
-		createReverseCards(8); // 2 for each color * 4 for each color = 8 cards
+		createReverseCards(deck, 8); // 2 for each color * 4 for each color = 8 cards
 		
-		createSkipCards(8); // 2 for each color * 4 for each color = 8 cards
+		createSkipCards(deck, 8); // 2 for each color * 4 for each color = 8 cards
 		
-		createDrawTwoCards(8);
+		createDrawTwoCards(deck, 8);
 		
-		createWildCards(8); // 2 for each color * 4 for each color = 8 cards
+		createWildCards(deck, 8); // 2 for each color * 4 for each color = 8 cards
 		
-		createWildDrawFourCards(8); // 2 for each color * 4 for each color = 8 cards
+		createWildDrawFourCards(deck, 8); // 2 for each color * 4 for each color = 8 cards
 		
 	}
 	
 	
-	void createReverseCards(int count) {
+	void createReverseCards(Stack<Card> d, int count) {
 		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
-			for (int numReverseCards = 0; numReverseCards < count; numReverseCards++) {
-				ReverseCard revCard = new ReverseCard();
-				this.push(revCard);
+			for (int numReverseCards = 0; numReverseCards < count / 4; numReverseCards++) {
+				ReverseCard revCard = new ReverseCard(colorofCard, 10);
+				d.push(revCard);
 			}
 		}
 	}
 	
-	void createSkipCards(int count) {
+	void createSkipCards(Stack<Card> d, int count) {
 		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
-			for (int numSkipCards = 0; numSkipCards < count; numSkipCards++) {
-				SkipCard skipCard = new SkipCard();
-				this.push(skipCard);
+			for (int numSkipCards = 0; numSkipCards < count / 4; numSkipCards++) {
+				SkipCard skipCard = new SkipCard(colorofCard, 10);
+				d.push(skipCard);
 			}
 		}
 	}
 	
-	void createDrawTwoCards(int count) {
-		for (int colorofCard = 1; colorofCard < 5; colorofCard++) {
-			for (int numSkipCards = 0; numSkipCards < count; numSkipCards++) {
-				DrawTwoCard skipCard = new DrawTwoCard();
-				this.push(skipCard);
+	void createDrawTwoCards(Stack<Card> d, int count) {
+		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
+			for (int numSkipCards = 0; numSkipCards < count / 4 ; numSkipCards++) {
+				DrawTwoCard skipCard = new DrawTwoCard(colorofCard, 12);
+				d.push(skipCard);
 			}
 		}
 	}
 	
-	void createWildCards(int count) {
+	void createWildCards(Stack<Card> d, int count) {
 		for (int numWildCards = 0; numWildCards < count; numWildCards++ ) {
-			WildCard wildCard = new WildCard();
-			this.push(wildCard);
+			WildCard wildCard = new WildCard(4, 13);
+			d.push(wildCard);
 		}
 	}
 	
-	void createWildDrawFourCards(int count) {
+	void createWildDrawFourCards(Stack<Card> d, int count) {
 		for (int numWild4Cards = 0; numWild4Cards < count; numWild4Cards++) {
-			WildDrawFourCard wild4Card = new WildDrawFourCard();
-			this.push(wild4Card);
+			WildDrawFourCard wild4Card = new WildDrawFourCard(4,13);
+			d.push(wild4Card);
 		}
 	}
 	
-	void createRegularCards(int num_cards_needed) {
-		
+	void createRegularCards(Stack<Card> d, int num_cards_needed) {
 		for (int colorofCard = 1; colorofCard < 5; colorofCard++) {
-			for (int numRegCards = 0; numRegCards <= 18; numRegCards++ ) {
-				Card regCard = new Card(colorofCard, numRegCards % 9);
-				this.push(regCard);
+			for (int numRegCards = 1; numRegCards <= 19; numRegCards++ ) {
+				Card regCard = new Card(colorofCard, numRegCards % 10);
+				d.push(regCard);
 			}
 		}
 
 	}
 	
+	Stack<Card> getDeck(){
+		return this.deck;
+	}
+	
 	Card peek() {
-		return this.peek();
+		return this.getDeck().peek();
 	}
 	
 	Card pop() {
-		return this.pop();
+		return this.getDeck().pop();
 	}
 	
 	void push(Card card_to_push) {
-		this.push(card_to_push);
+		this.getDeck().push(card_to_push);
 	}
 }
 
 
 class Hand extends Card {
-	Map<Integer, Card> hand = new HashMap<Integer, Card>();
+	Map<Integer, Card> hand;
 
 	int total_cards;
 	public Hand() {
-		Map<Integer, Card> hand = new HashMap<Integer, Card>();
+		hand = new HashMap<Integer, Card>();
 		total_cards = hand.size();
 	}
 	

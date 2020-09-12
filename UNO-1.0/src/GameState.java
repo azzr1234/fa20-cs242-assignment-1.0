@@ -48,7 +48,24 @@ public class GameState {
 		current_direction = direction;
 		
 	}
+	
+	void reverse_card_Played() {
+		
+	}
+	
+	void skip_card_Played() {
+		
+	}
+	
+	void draw_two_card_played() {
+		
+	}
+	
 	void wild_card_played() {
+		
+	}
+	
+	void wild_draw_4_played() {
 		
 	}
 	
@@ -106,8 +123,8 @@ public class GameState {
 	
 	//Shuffle the discard pile to be used as the playable deck when the playable deck runs out
 	Deck shuffle_discard(Deck deck_to_shuffle) {
-		//return Collections.shuffle(deck_to_shuffle);
-		return null;
+		Collections.shuffle(deck_to_shuffle.getDeck());
+		return deck_to_shuffle;
 	}
 	
 	//Replace the playable deck with the shuffled discard pile
