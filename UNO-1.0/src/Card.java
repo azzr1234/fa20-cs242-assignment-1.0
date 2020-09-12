@@ -156,7 +156,7 @@ class Deck extends Card {
 	}
 	
 	
-	void createReverseCards(Stack<Card> d, int count) {
+	public void createReverseCards(Stack<Card> d, int count) {
 		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
 			for (int numReverseCards = 0; numReverseCards < count / 4; numReverseCards++) {
 				ReverseCard revCard = new ReverseCard(colorofCard, 10);
@@ -165,7 +165,7 @@ class Deck extends Card {
 		}
 	}
 	
-	void createSkipCards(Stack<Card> d, int count) {
+	public void createSkipCards(Stack<Card> d, int count) {
 		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
 			for (int numSkipCards = 0; numSkipCards < count / 4; numSkipCards++) {
 				SkipCard skipCard = new SkipCard(colorofCard, 10);
@@ -174,7 +174,7 @@ class Deck extends Card {
 		}
 	}
 	
-	void createDrawTwoCards(Stack<Card> d, int count) {
+	public void createDrawTwoCards(Stack<Card> d, int count) {
 		for (int colorofCard = 0; colorofCard < 4; colorofCard++) {
 			for (int numSkipCards = 0; numSkipCards < count / 4 ; numSkipCards++) {
 				DrawTwoCard skipCard = new DrawTwoCard(colorofCard, 12);
@@ -183,21 +183,21 @@ class Deck extends Card {
 		}
 	}
 	
-	void createWildCards(Stack<Card> d, int count) {
+	public void createWildCards(Stack<Card> d, int count) {
 		for (int numWildCards = 0; numWildCards < count; numWildCards++ ) {
 			WildCard wildCard = new WildCard(4, 13);
 			d.push(wildCard);
 		}
 	}
 	
-	void createWildDrawFourCards(Stack<Card> d, int count) {
+	public void createWildDrawFourCards(Stack<Card> d, int count) {
 		for (int numWild4Cards = 0; numWild4Cards < count; numWild4Cards++) {
 			WildDrawFourCard wild4Card = new WildDrawFourCard(4,13);
 			d.push(wild4Card);
 		}
 	}
 	
-	void createRegularCards(Stack<Card> d, int num_cards_needed) {
+	public void createRegularCards(Stack<Card> d, int num_cards_needed) {
 		for (int colorofCard = 1; colorofCard < 5; colorofCard++) {
 			for (int numRegCards = 1; numRegCards <= 19; numRegCards++ ) {
 				Card regCard = new Card(colorofCard, numRegCards % 10);
@@ -207,19 +207,19 @@ class Deck extends Card {
 
 	}
 	
-	Stack<Card> getDeck(){
+	public Stack<Card> getDeck(){
 		return this.deck;
 	}
 	
-	Card peek() {
+	public Card peek() {
 		return this.getDeck().peek();
 	}
 	
-	Card pop() {
+	public Card pop() {
 		return this.getDeck().pop();
 	}
 	
-	void push(Card card_to_push) {
+	public void push(Card card_to_push) {
 		this.getDeck().push(card_to_push);
 	}
 }
@@ -235,23 +235,23 @@ class Hand extends Card {
 	}
 	
 	
-	Map<Integer, Card> getHand() {
+	public Map<Integer, Card> getHand() {
 		return this.hand;
 	}
 	//add a card to player hand
-	void insert_card_to_hand(Card newCard) {
+	public void insert_card_to_hand(Card newCard) {
 		hand.put(total_cards, newCard);
 		this.total_cards += 1;
 	}
 	
-	void remove_card_from_hand(int cardIndex) {
+	public void remove_card_from_hand(int cardIndex) {
 		this.hand.remove(cardIndex);
 		this.total_cards -= 1;
 	}
 	
 	
 	//show player hand
-	Map<Integer, String> convert_to_readable_hand(Map<Integer, Card> hand){
+	public Map<Integer, String> convert_to_readable_hand(Map<Integer, Card> hand){
 		Map<Integer, Card> hand_to_convert = this.getHand();
 		Map<Integer, String> hand_readable = new HashMap<Integer, String>();
 		for (Map.Entry<Integer, Card> entry : hand_to_convert.entrySet()) {
@@ -262,7 +262,7 @@ class Hand extends Card {
 		return hand_readable;
 	}
 	
-	ArrayList<Integer> check_for_valid_card(Card card_to_compare) {
+	public ArrayList<Integer> check_for_valid_card(Card card_to_compare) {
 		ArrayList<Integer> allValidCards = new ArrayList<Integer>();
 		Map<Integer, Card> handToCheck = this.getHand();
 		int color_to_check = card_to_compare.card_color;
