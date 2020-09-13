@@ -1,3 +1,4 @@
+package uno;
 /*
  * Player class to represent players in the game
  * 
@@ -27,17 +28,21 @@
  * 
  */
 public class Player {
-	String name;
+	int player_id;
 	int card_count;
 	Hand  playerHand;
 	Card last_played_card_in_game;
 	GameState currentGame;
+	Actions doSomething;
 	boolean turn_finished;
 
-	public Player(String player_name, Hand cards){
-		name = player_name;
-		card_count = playerHand.total_cards;
+	public Player(int playerID, Hand cards, GameState game, Card last_played){
+		player_id = playerID;
+		card_count = this.playerHand.total_cards;
 		playerHand = cards;
+		currentGame = game;
+		last_played_card_in_game = last_played;
+		turn_finished = false;
 	}
 	
 	public Card play_turn() {
@@ -52,7 +57,7 @@ public class Player {
 	}
 	
 	public void draw_card_from_discard_deck() {
-		Card pulledCard = this.currentGame.pull_from_playable_deck();
+		Card pulledCard = this.doSomething.pull_from_playable_deck();
 		if(is_draw_card_valid(pulledCard)) {
 			play_card_or_skip_turn();
 		}else {
@@ -103,7 +108,7 @@ public class Player {
 	
 	//Player has choice to play a card or draw a new card even if there is a valid card to be played
 	public boolean play_card_or_skip_turn() {
-	
+		
 		return true;
 	}
 	
