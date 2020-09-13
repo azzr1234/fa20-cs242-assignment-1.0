@@ -1,0 +1,40 @@
+/*
+ * Class representing the state of the game. Inherits Player and Card class
+ * @param totalPlayers
+ * The total # of players in the game.
+ * 
+ * @param reverse_direction
+ * Keeps track of the direction the game is flowing. This variable changes if a reverse card is ever used.
+ * 
+ * @param closest_wineer 
+ * This is the player with the least amount of cards, closest to winning at any given time.
+ * 
+ * @param current_color
+ * This is the color the next card should match. Any card played next much match this card, or the number, or a wild/wilddraw4 card must be played
+ * 
+ * @param current_number
+ * This is the number the next card should match, if not, it must be the same color as the card or a wild/wilddraw4 card must be played
+ * 
+ * @param playableDeck
+ * This is the deck that will be used to pull cards from if needed. This deck is the left over after distributing 7 cards to each player
+ * 
+ * @param discardDeck
+ * This is the deck the players will put their cards into and later reused and shuffled to replace playableDeck if the playableDeck is empty
+ *  
+ */
+public class GameState {
+	int totalPlayers;
+	boolean reverse_direction;
+	String closest_winner;
+	int current_color;
+	int current_number;
+	Deck playableDeck;
+	Deck discardDeck; 
+	public GameState() {};
+	public GameState(int total_players, boolean direction){
+		totalPlayers = total_players;
+		reverse_direction = direction;
+	}
+	
+	
+}

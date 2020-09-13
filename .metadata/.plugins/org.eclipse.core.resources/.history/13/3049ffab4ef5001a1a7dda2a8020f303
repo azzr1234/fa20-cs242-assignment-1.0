@@ -1,0 +1,21 @@
+package uno;
+import java.util.*;
+
+public class GameTable {
+	public PlayableDeck playableDeck;
+	public DiscardDeck discardDeck;
+	public GameState newGame;
+	
+	public static GameTable table = null;
+	public GameTable() {
+		playableDeck = new PlayableDeck();
+		discardDeck = new DiscardDeck();
+		ArrayList<Players> gamePlayers = create_players(2);
+		newGame = new GameState(2, gamePlayers);
+	}
+	
+	
+	public void create_players(int numPlayers) {
+		
+	}
+}

@@ -1,0 +1,10 @@
+import junit.framework.*;
+import junit.extensions.*;
+import java.lang.AssertionError;
+import java.io.*;
+public class UnoTests extends TestCase{
+	public static Test suite() {
+		TestSuite testSuite = new TestSuite(UnoTests.class);
+		return testSuite;
+	}
+}

@@ -1,0 +1,16 @@
+/*
+ * Player class to represent players in the game
+ * Name of the Player
+ * Each player must start with 7 cards
+ * Is the rotation going clockwise or has there been a reverse card to change the direction of play
+ */
+public class Player {
+	String name;
+	int starting_card_count;
+	boolean nextPlayerRotation;
+	public Player(String player_name, int numCards, boolean nextPlayer){
+		name = player_name;
+		starting_card_count = numCards;
+		nextPlayerRotation = nextPlayer;
+	}
+}

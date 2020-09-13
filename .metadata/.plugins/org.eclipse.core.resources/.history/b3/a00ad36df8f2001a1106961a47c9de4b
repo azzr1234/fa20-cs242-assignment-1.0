@@ -1,0 +1,9 @@
+/*
+ * Class representing the state of the game. Inherits Player and Card class
+ * 
+ */
+public class GameState {
+	public GameState(){
+		
+	}
+}

@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+/*
+ * 
+ */
+public class Deck extends Card {
+	Stack<Card> deck;
+	public Deck() {
+		for (int numWildCards = 0; numWildCards < 4; numWildCards++ ) {
+			Card wildCard = new Card(0,13);
+			deck.push(wildCard);
+		}
+		for (int numWild4Cards = 0; numWild4Cards < 4; numWild4Cards++) {
+			Card wild4Card = new Card(0,14);
+			deck.push(wild4Card);
+		}
+		for (int numRegCards = 0; numRegCards < 18; numRegCards++ ) {
+			
+		}
+		for (int colorofCard = 1; colorofCard < 5; colorOfCard++) {
+			for (int numReverseCards = 0; numReverseCards < 4; numreverseCards++) {
+				Card revCard = new Card(colorofCard, 11);
+				deck.push(revCard);
+			}
+		}
+
+	}
+	
+}

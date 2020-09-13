@@ -1,0 +1,9 @@
+package uno;
+
+public class Actions {
+	
+	public Actions() {};
+	
+	
+
+}

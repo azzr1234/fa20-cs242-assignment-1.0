@@ -1,0 +1,14 @@
+// Reverse the direction of play
+public abstract class ReverseCard extends Card{
+	public ReverseCard(int colorOfCard, int valueOfCard) {
+		super(colorOfCard,valueOfCard);
+
+	};
+	public enum Value {
+		ReverseCard { public String toString() {return "11";}}
+	}
+	
+	void changeDirectionofPlay() {
+		
+	}
+}

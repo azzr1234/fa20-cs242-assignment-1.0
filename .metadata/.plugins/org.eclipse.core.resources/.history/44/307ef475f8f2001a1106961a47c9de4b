@@ -1,0 +1,10 @@
+/*
+ * Class representing the state of the game. Inherits Player and Card class
+ * 
+ */
+public class GameState {
+	int total_players;
+	public GameState(int total_players){
+		total_players = total_players;
+	}
+}

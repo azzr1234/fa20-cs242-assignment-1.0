@@ -1,0 +1,9 @@
+import java.util.*;
+public class GameTable {
+	private Deck playableDeck;
+	private Stack<Card >discardDeck;
+	private GameTable() {
+		playableDeck = new Deck();
+		
+	}
+}

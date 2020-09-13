@@ -1,0 +1,13 @@
+/*
+ * Class representing the state of the game. Inherits Player and Card class
+ * 
+ */
+public class GameState {
+	int totalPlayers;
+	boolean reverse_direction;
+	public GameState() {};
+	public GameState(int total_players, boolean direction){
+		totalPlayers = total_players;
+		reverse_direction = false;
+	}
+}
