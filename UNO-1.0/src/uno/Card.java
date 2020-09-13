@@ -1,5 +1,5 @@
 package uno;
-import java.util.*;
+
 /*
  * Class for UNO cards
  * @param card_color --> The color of the card is represented by an integer

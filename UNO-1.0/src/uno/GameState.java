@@ -48,19 +48,17 @@ public class GameState {
 	Player currentPlayer;
 	Player nextPlayer;
 	
-	public GameState(int total_players, ArrayList<Player> gamePlayers ){
+	public GameState(int total_players, ArrayList<Player> gamePlayers, PlayableDeck pd, DiscardDeck dd ){
 		players = gamePlayers;
-		
 		totalPlayers = total_players;
-		
+		playableDeck = pd;
+		discardDeck = dd;
 	}
 	
-	public void nextPlayer() {
-		
-	}
 	
+	
+	//Game state needs to check the current leader after every turn to see if someone has won
 	public void current_leader() {
-		
 		ListIterator<Player> listIterator = players.listIterator();
 		int numOfCards = listIterator.next().card_count;
 		while (listIterator.hasNext()) {
@@ -91,7 +89,4 @@ public class GameState {
 		this.current_color = this.discardDeck.peek().card_color;
 		this.current_number = this.discardDeck.peek().card_value;
 	}
-	
-	
-
 }
