@@ -20,12 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90277cbb-3ca7-4c49-8097-62425e146a95" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/UNO/GamePlay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UNO/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UNO/GameStateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO/GameStateTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,7 +54,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="JUnit.UNO in fa20-cs242-assignment-1.1">
+  <component name="RunManager" selected="JUnit.All in fa20-cs242-assignment-1.1">
     <configuration name="All in fa20-cs242-assignment-1.1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="fa20-cs242-assignment-1.1" />
       <option name="PACKAGE_NAME" value="" />
@@ -53,7 +63,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UNO in fa20-cs242-assignment-1.1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameStateTest.playTurn" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="fa20-cs242-assignment-1.1" />
       <extension name="coverage">
         <pattern>
@@ -62,15 +72,68 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="UNO" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="MAIN_CLASS_NAME" value="UNO.GameStateTest" />
+      <option name="METHOD_NAME" value="playTurn" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameStateTest.playTwoCards" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fa20-cs242-assignment-1.1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="UNO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="UNO" />
+      <option name="MAIN_CLASS_NAME" value="UNO.GameStateTest" />
+      <option name="METHOD_NAME" value="playTwoCards" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameStateTest.specialCardActions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fa20-cs242-assignment-1.1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="UNO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="UNO" />
+      <option name="MAIN_CLASS_NAME" value="UNO.GameStateTest" />
+      <option name="METHOD_NAME" value="specialCardActions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameStateTest.wildCardColorChangeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="fa20-cs242-assignment-1.1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="UNO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="UNO" />
+      <option name="MAIN_CLASS_NAME" value="UNO.GameStateTest" />
+      <option name="METHOD_NAME" value="wildCardColorChangeTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UNO in fa20-cs242-assignment-1.1" />
         <item itemvalue="JUnit.All in fa20-cs242-assignment-1.1" />
+        <item itemvalue="JUnit.GameStateTest.specialCardActions" />
+        <item itemvalue="JUnit.GameStateTest.wildCardColorChangeTest" />
+        <item itemvalue="JUnit.GameStateTest.playTurn" />
+        <item itemvalue="JUnit.GameStateTest.playTwoCards" />
       </list>
     </recent_temporary>
   </component>
@@ -98,32 +161,56 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1600706385557">
+    <state x="549" y="172" key="FileChooserDialogImpl" timestamp="1601078956070">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1600706385557" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1600706385557">
+    <state x="549" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1601078956070" />
+    <state width="1493" height="422" key="GridCell.Tab.0.bottom" timestamp="1601087875435">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1600706385557" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1600706385557">
+    <state width="1493" height="422" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601087875435" />
+    <state width="1493" height="422" key="GridCell.Tab.0.center" timestamp="1601087875435">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1600706385557" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1600706385557">
+    <state width="1493" height="422" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1601087875435" />
+    <state width="1493" height="422" key="GridCell.Tab.0.left" timestamp="1601087875435">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1600706385557" />
+    <state width="1493" height="422" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1601087875435" />
+    <state width="1493" height="422" key="GridCell.Tab.0.right" timestamp="1601087875435">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="422" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1601087875435" />
+    <state width="1493" height="265" key="GridCell.Tab.1.bottom" timestamp="1601082711060">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="265" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601082711060" />
+    <state width="1493" height="265" key="GridCell.Tab.1.center" timestamp="1601082711060">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="265" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1601082711060" />
+    <state width="1493" height="265" key="GridCell.Tab.1.left" timestamp="1601082711060">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="265" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1601082711060" />
+    <state width="1493" height="265" key="GridCell.Tab.1.right" timestamp="1601082711060">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1493" height="265" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1601082711060" />
     <state x="498" y="309" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1600626647768">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="498" y="309" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.834@0.0.1536.834" timestamp="1600626647768" />
+    <state x="469" y="175" key="refactoring.ChangeSignatureDialog" timestamp="1601080719227">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="469" y="175" key="refactoring.ChangeSignatureDialog/0.0.1536.834@0.0.1536.834" timestamp="1601080719227" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/fa20_cs242_assignment_1_0$UNO_in_fa20_cs242_assignment_1_1.ic" NAME="UNO in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1600703144566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/fa20_cs242_assignment_1_0$UNO_in_fa20_cs242_assignment_1_1.ic" NAME="UNO in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1601078802871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>UNO.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/fa20_cs242_assignment_1_0$All_in_fa20_cs242_assignment_1_1.ic" NAME="All in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1600705235886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/fa20_cs242_assignment_1_0$All_in_fa20_cs242_assignment_1_1.ic" NAME="All in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1601087790186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/fa20_cs242_assignment_1_1$All_in_fa20_cs242_assignment_1_1.ic" NAME="All in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1600626990310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/copy$All_in_fa20_cs242_assignment_1_1.ic" NAME="All in fa20-cs242-assignment-1.1 Coverage Results" MODIFIED="1600627566546" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>

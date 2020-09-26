@@ -1,12 +1,10 @@
 package UNO;
 
-import org.ietf.jgss.GSSManager;
 import org.junit.jupiter.api.Test;
 
-import javax.rmi.ssl.SslRMIClientSocketFactory;
-import java.lang.reflect.Array;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,8 +33,18 @@ class GameStateTest {
     void playTurn() {
         GameState game = new GameState(8);
         game.initDecks();
+        Card topCard = game.discardDeck.peek();
+        ArrayList<Integer> validCards = game.hasAnyValidCardCheck(game.currentPlayer);
+        String chosenCard = Integer.toString(validCards.get(0));
+        InputStream sysInBackup = System.in; // backup System.in to restore it later
+        ByteArrayInputStream in = new ByteArrayInputStream(chosenCard.getBytes());
+        System.setIn(in);
+        game.playTurn(game.currentPlayer);
+        System.setIn(sysInBackup);
+        assertTrue(topCard.getColor().equals(game.discardDeck.peek().getColor()) ||
+                topCard.getValue().equals(game.discardDeck.peek().getValue()));
 
-        game.playTurn(game.currentPlayer, false);
+
 
         switch (game.currentCard.getValue()) {
             case "Reverse":
@@ -75,21 +83,21 @@ class GameStateTest {
         for(int playerIndex = 0; playerIndex < game.players.size(); playerIndex++){
             assertEquals(7, game.players.get(playerIndex).cardCount);
         }
-
-
-
         ArrayList<Integer> validCards = game.hasAnyValidCardCheck(game.currentPlayer);
         while(validCards.isEmpty()){
             validCards = game.hasAnyValidCardCheck(game.nextPlayer);
             game.currentPlayer = game.nextPlayer;
             game.determineNextPlayer();
         }
+
+
         Card topCard = game.discardDeck.peek();
+        String[] chosen_index = {Integer.toString(validCards.get(0))};
+        game.playCard(game.currentPlayer, validCards, chosen_index);
 
-        game.playCard(game.currentPlayer, validCards);
 
-        assertTrue(topCard.getColor() == game.discardDeck.peek().getColor() ||
-                topCard.getValue() == game.discardDeck.peek().getValue());
+        assertTrue(topCard.getColor().equals(game.discardDeck.peek().getColor()) ||
+                topCard.getValue().equals(game.discardDeck.peek().getValue()));
         assertEquals(6, game.currentPlayer.playerHand.getHand().size());
 
     }
@@ -98,21 +106,42 @@ class GameStateTest {
     void playTwoCards(){
         GameState game = new GameState(8);
         game.initDecks();
+
+
         ArrayList<Integer> validCards = game.hasAnyValidCardCheck(game.currentPlayer);
         Card topCard = game.discardDeck.peek();
+        validCards = game.hasAnyValidCardCheck(game.currentPlayer);
+
+
         if(validCards.size() >=2){
-            game.playTwoCards(game.currentPlayer, validCards);
+            String[] indices = {Integer.toString((validCards.get(0))), Integer.toString(validCards.get(1))};
+            game.playTwoCards(game.currentPlayer, validCards, indices);
             Card secondCardPlayed = game.discardDeck.pop();
             Card firstCardPlayed = game.discardDeck.peek();
-            assertTrue(secondCardPlayed.getColor() == topCard.getColor() ||
-                    secondCardPlayed.getValue() == topCard.getValue());
-            assertTrue(firstCardPlayed.getColor() == topCard.getColor() ||
-                    firstCardPlayed.getValue() == topCard.getValue());
-            assertTrue(firstCardPlayed.getColor() == secondCardPlayed.getColor() ||
-                    firstCardPlayed.getValue() == secondCardPlayed.getValue());
+
+            assertTrue(secondCardPlayed.getColor().equals(topCard.getColor()) ||
+                    secondCardPlayed.getValue().equals(topCard.getValue()));
+            assertTrue(firstCardPlayed.getColor().equals(topCard.getColor()) ||
+                    firstCardPlayed.getValue().equals(topCard.getValue()));
+            assertTrue(firstCardPlayed.getColor().equals(topCard.getColor()) ||
+                    firstCardPlayed.getValue().equals(topCard.getValue()));
         }
 
     }
+
+    @Test
+    void wildCardColorChangeTest(){
+        GameState game = new GameState(8);
+        game.discardDeck.push(new Card(null, "WildCard"));
+        String chosenColor = "blue";
+        InputStream sysInBackup = System.in; // backup System.in to restore it later
+        ByteArrayInputStream in = new ByteArrayInputStream(chosenColor.getBytes());
+        System.setIn(in);
+        game.specialCardActions();
+        System.setIn(sysInBackup);
+        assertEquals("Blue",game.currentCard.getColor());
+    }
+
 
     @Test
     void checkforWinner(){
@@ -301,14 +330,16 @@ class GameStateTest {
         assertEquals(game.players.get(5).cardCount, 9);
         assertEquals(game.players.get(4), game.nextPlayer );
 
-        game.discardDeck.push(new Card("Blue", "WildCard"));
+        /*game.discardDeck.push(new Card("Blue", "WildCard"));
         game.specialCardActions();
         assertEquals("Blue",game.currentCard.getColor());
 
         game.discardDeck.push(new Card("Blue", "WildDrawFourCard"));
         game.specialCardActions();
-        //assertEquals(game.players.get(3));
         assertEquals(11 ,game.players.get(4).cardCount);
-        assertEquals(game.players.get(3), game.nextPlayer);
+        assertEquals(game.players.get(3), game.nextPlayer);*/
     }
+
+
+
 }

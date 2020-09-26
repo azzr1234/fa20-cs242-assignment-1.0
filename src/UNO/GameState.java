@@ -1,8 +1,10 @@
 package UNO;
 
-import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 
-
+import javax.swing.tree.ExpandVetoException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -88,11 +90,10 @@ public class GameState{
      * determines who the next player is and takes the special card action into calculation
      *  @param p player who is playing turn
      */
-    public void playTurn(Player p, boolean playTwo){
+    public void playTurn(Player p){
         ArrayList<Integer> validCardsInHand = hasAnyValidCardCheck(p);
         if(!validCardsInHand.isEmpty()){
-            //if input from player is true; play two cards
-            playCard(p,validCardsInHand);
+            doPlayerChoice(p, validCardsInHand);
             p.updateCardCount();
         }else {
             Card drawnCard = drawCard(p);
@@ -103,65 +104,120 @@ public class GameState{
             }
             this.discardDeck.push(drawnCard);
         }
-
         specialCardActions();
         determineNextPlayer();
-        //Player potentialWinner = checkForWinner();
     }
+
+    /**
+     * Gets color input from player
+     * @return
+     */
+    private String getColorChange(){
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String input = "";
+        try {
+            input = rd.readLine();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
+     * Get choice from player of playing 1 or 2 cards
+     * @param p
+     * @param validCardsInHand
+     */
+    private void doPlayerChoice(Player p, ArrayList<Integer> validCardsInHand){
+        System.out.println("If you would like play more than one valid card," +
+                " Please Enter the card indices seperated by a space. Ex. 1 4 ");
+        try{
+            String[] chosen_indices = getCardIndexInput();
+            if(chosen_indices.length == 2){
+                playTwoCards(p, validCardsInHand, chosen_indices);
+            }else if(chosen_indices.length == 1){
+                String[] chosen_index = getCardIndexInput();
+                playCard(p,validCardsInHand, chosen_index);
+            }else{
+                throw new Exception("Cannot play more than 2 Cards. Please enter two or 1 card index to play");
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Get the index of the cards the player would like to play
+     * @return
+     */
+    private String[] getCardIndexInput(){
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String index_input = "";
+        try {
+            index_input = rd.readLine();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        String[] indices= index_input.split(" ");;
+        return indices;
+    }
+
+
 
     /**
      * Completes any actions for when a special card is played
      */
     public void specialCardActions(){
-        currentCard = this.discardDeck.peek();
-        switch (currentCard.getValue()) {
+        this.currentCard = this.discardDeck.peek();
+        switch (this.currentCard.getValue()) {
             case "Reverse":
                 reverseDirection();
+                updateCurrentCard();
                 break;
             case "Skip":
                 skipNextPlayer();
+                updateCurrentCard();
                 break;
             case "DrawTwo":
                 skippedPlayerDrawNumCard(2);
                 determineNextPlayer();
                 this.currentPlayer = this.nextPlayer;
                 determineNextPlayer();
+                updateCurrentCard();
                 break;
             case "WildCard":
-                //choose color for wild card
-                //Would like to input Scanner here to input new Color
-                //Scanner takeInput = new Scanner(System.in);
-                //System.out.print("Choose color for Wild Card. Ex. Blue, Yellow, Green, Red");
-                //String chosenColor = takeInput.nextLine();
-                this.currentCard = new Card("Blue", "WildCard");
-                //skipNextPlayer();
+                String newColor = getColorChange();
+                this.currentCard = new Card(newColor, "WildCard");
+                //this.discardDeck.pe
                 break;
             case "WildDrawFourCard":
-                //choose color for wild card
-                //Would like to input Scanner here to input new Color
-                //Scanner takePlayerInput = new Scanner(System.in);
-               // System.out.print("Choose color for Wild Card. Ex. Blue, Yellow, Green, Red");
-                //String chosenWildCardColor = takePlayerInput.nextLine();
-                this.currentCard = new Card("Blue", "WildDrawFourCard");
-                //determineNextPlayer();
+                newColor = getColorChange();
+                this.currentCard = new Card(newColor, "WildDrawFourCard");
+
                 skippedPlayerDrawNumCard(4);
                 skipNextPlayer();
                 break;
-            case "SkipMe":
-
-                break;
         }
-        updateCurrentCard();
+        //
     }
 
     /**
      * Action for when a player wants to play a card
      * @param p player that will play a card
      * @param validCards ArrayList of cards that are valid to play from the current top card on the discard pile
+     * @param chosen_index
      */
-    public void playCard(Player p, ArrayList<Integer> validCards){
-        Card cardToRemove = p.playerHand.getHand().get(validCards.get(0));
-        this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
+    public void playCard(Player p, ArrayList<Integer> validCards, String[] chosen_index){
+        try{
+            if(validCards.contains(Integer.parseInt(chosen_index[0]))){
+                Card cardToRemove = p.playerHand.getHand().get(Integer.parseInt(chosen_index[0]));
+                this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
+            }else{
+                throw new Exception("Your chosen cards were not a valid card to play. Please choose again.");
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 
@@ -171,11 +227,21 @@ public class GameState{
      * @param p player to play cards
      * @param validCards ArrayList of valid cards to be able to play
      */
-    public void playTwoCards(Player p, ArrayList<Integer> validCards){
-        Card cardToRemove = p.playerHand.getHand().get(validCards.get(0));
-        this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
-        Card secondCardToRemove = p.playerHand.getHand().get(validCards.get(1) - 1);
-        this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(secondCardToRemove)));
+    public void playTwoCards(Player p, ArrayList<Integer> validCards, String[] indices){
+        try{
+            if(!validCards.contains(Integer.parseInt(indices[0])) || !validCards.contains(Integer.parseInt(indices[1]))){
+                throw new Exception("Your chosen card was not a valid card to play. Please choose again");
+            }
+            if(validCards.contains(Integer.parseInt(indices[0])) && validCards.contains(Integer.parseInt(indices[1]))){
+
+                Card cardToRemove = p.playerHand.getHand().get(Integer.parseInt(indices[0]));
+                Card secondCardToRemove = p.playerHand.getHand().get(Integer.parseInt(indices[1]));
+                this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
+                this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(secondCardToRemove)));
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -183,9 +249,9 @@ public class GameState{
      * @return the player who is the winner
      */
     public Player checkForWinner(){
-        for(int playerIndex =0; playerIndex < this.players.size(); playerIndex++){
-            if(this.players.get(playerIndex).cardCount == 0){
-                return this.players.get(playerIndex);
+        for (Player player : this.players) {
+            if (player.cardCount == 0) {
+                return player;
             }
         }
         return null;
@@ -226,11 +292,19 @@ public class GameState{
         for(Card checkCard : p.playerHand.getHand()){
             //System.out.println(cardIndex);
             //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
-            if (checkCard.getColor() == this.discardDeck.peek().getColor() ||
-                    checkCard.getValue() == this.discardDeck.peek().getValue()) {
-                //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
-                allValidCards.add(cardIndex);
+            try{
+                if(checkCard.getColor() == null){
+                    throw new NullPointerException("WildCard in Hand");
+                }
+                if (checkCard.getColor().equals(this.discardDeck.peek().getColor()) ||
+                        checkCard.getValue().equals(this.discardDeck.peek().getValue())) {
+                    //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
+                    allValidCards.add(cardIndex);
+                }
+            }catch(NullPointerException e){
+                System.out.println(e.getMessage());
             }
+
             cardIndex++;
         }
 
