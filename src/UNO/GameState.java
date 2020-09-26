@@ -1,5 +1,6 @@
 package UNO;
-
+import UNO_GUI.*;
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 
 import javax.swing.tree.ExpandVetoException;
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ public class GameState{
     public Player nextPlayer;
     public Card currentCard;
     public boolean directionClockwise;
+    public UnoGUI gui;
 
     /**
      * Constructor for a new game of UNO.
@@ -53,6 +55,7 @@ public class GameState{
         this.directionClockwise = true;
         this.determineNextPlayer();
         this.initDecks();
+        this.gui = new UnoGUI(this);
     }
 
     /**
@@ -96,8 +99,9 @@ public class GameState{
             doPlayerChoice(p, validCardsInHand);
             p.updateCardCount();
         }else {
+            gui.noValidCardsDrawCards();
             Card drawnCard = drawCard(p);
-            while(!drawCardValid(drawnCard)){
+            while(drawCardValid(drawnCard) == false){
                 p.playerHand.getHand().add(drawnCard);
                 p.updateCardCount();
                 drawnCard = drawCard(p);
@@ -105,7 +109,9 @@ public class GameState{
             this.discardDeck.push(drawnCard);
         }
         specialCardActions();
+        sayUno(p);
         determineNextPlayer();
+        setNextPlayer();
     }
 
     /**
@@ -113,6 +119,7 @@ public class GameState{
      * @return
      */
     private String getColorChange(){
+        System.out.println("Input a new Color to set Wild Card color!");
         BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         try {
@@ -129,22 +136,62 @@ public class GameState{
      * @param validCardsInHand
      */
     private void doPlayerChoice(Player p, ArrayList<Integer> validCardsInHand){
-        System.out.println("If you would like play more than one valid card," +
-                " Please Enter the card indices seperated by a space. Ex. 1 4 ");
+
         try{
-            String[] chosen_indices = getCardIndexInput();
-            if(chosen_indices.length == 2){
-                playTwoCards(p, validCardsInHand, chosen_indices);
-            }else if(chosen_indices.length == 1){
-                String[] chosen_index = getCardIndexInput();
+            System.out.println("Would you like to play more than one card?(y/n)");
+            String choice = getPlayerChoice();
+            if(!choice.equals("y") || !choice.equals("y")){
+                throw new Exception("Input must be either y or n");
+            }
+            if(choice.equals("y")){
+                System.out.println("Please Enter the card indices seperated by a space. Max 2 cards. Ex. 1 4 ");
+                String[] chosen_indices = getCardIndexInput();
+                if(chosen_indices.length == 2){
+                    playTwoCards(p, validCardsInHand, chosen_indices);
+                }else {
+                    throw new Exception("You have entered an invalid number of cards. Please enter 2 indices.");
+                }
+            }else if(choice.equals("n")){
+                System.out.println("Please Enter the card index. Ex. 3");
+                String[] chosen_index = getSingleCardIndexInput();
                 playCard(p,validCardsInHand, chosen_index);
+
             }else{
-                throw new Exception("Cannot play more than 2 Cards. Please enter two or 1 card index to play");
+                throw new Exception("Please input lower case y, for yes or n, for no");
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * Get player choice of player more than one card
+     * @return
+     */
+    private String getPlayerChoice(){
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String input = "";
+        try {
+            input = rd.readLine();
+
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return input;
+    }
+
+    private String[] getSingleCardIndexInput(){
+        BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
+        String input = "";
+        try {
+            input = rd.readLine();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        String[] index = {input};
+        return index;
+    }
+
 
     /**
      * Get the index of the cards the player would like to play
@@ -160,6 +207,13 @@ public class GameState{
         }
         String[] indices= index_input.split(" ");;
         return indices;
+    }
+
+    /**
+     * After determining next Player, the new player should go.
+     */
+    private void setNextPlayer(){
+        this.currentPlayer = this.nextPlayer;
     }
 
 
@@ -294,7 +348,7 @@ public class GameState{
             //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
             try{
                 if(checkCard.getColor() == null){
-                    throw new NullPointerException("WildCard in Hand");
+                    allValidCards.add(cardIndex);
                 }
                 if (checkCard.getColor().equals(this.discardDeck.peek().getColor()) ||
                         checkCard.getValue().equals(this.discardDeck.peek().getValue())) {
@@ -302,7 +356,7 @@ public class GameState{
                     allValidCards.add(cardIndex);
                 }
             }catch(NullPointerException e){
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
             }
 
             cardIndex++;
@@ -325,6 +379,9 @@ public class GameState{
      * @return card that has been drawn
      */
     public Card drawCard(Player p){
+        if(this.drawDeck.getDeck().empty()){
+            this.drawDeck = new PlayableDeck(this.discardDeck);
+        }
         return this.drawDeck.getDeck().pop();
     }
 
@@ -334,9 +391,7 @@ public class GameState{
      * @return boolean value of if valid
      */
     public boolean drawCardValid(Card drawnCard){
-        if(drawnCard.getColor().equals(this.discardDeck.peek().getColor())){
-            return true;
-        }else if(drawnCard.getValue().equals(this.discardDeck.peek().getValue())){
+        if(drawnCard.getColor().equals(this.discardDeck.peek().getColor()) || drawnCard.getValue().equals(this.discardDeck.peek().getValue())){
             return true;
         }
         return false;
@@ -386,6 +441,12 @@ public class GameState{
             nextInLine.playerHand.getHand().add(this.drawDeck.pop());
         }
         nextInLine.updateCardCount();
+    }
+
+    public void sayUno(Player p){
+        if(p.playerHand.getHand().size() == 1){
+            System.out.println("UNO!");
+        }
     }
 
 
