@@ -304,6 +304,9 @@ public class GameState{
             if(validCards.contains(Integer.parseInt(chosen_index[0]))){
                 Card cardToRemove = p.playerHand.getHand().get(Integer.parseInt(chosen_index[0]));
                 this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
+                System.out.println("You Have Played " + cardToRemove.getColor() + " " + cardToRemove.getValue());
+                System.out.println("Press any enter to acknowledge");
+                gui.acknowledgeChoice();
             }else{
                 throw new Exception("Your chosen cards were not a valid card to play. Please choose again.");
             }
@@ -330,6 +333,10 @@ public class GameState{
                 Card secondCardToRemove = p.playerHand.getHand().get(Integer.parseInt(indices[1]));
                 this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(cardToRemove)));
                 this.discardDeck.push(p.playerHand.getHand().remove(p.playerHand.getHand().indexOf(secondCardToRemove)));
+                System.out.println("You Have Played " + cardToRemove.getColor() + " " + cardToRemove.getValue() +
+                        " and " + secondCardToRemove.getColor() + " " + secondCardToRemove.getValue());
+                System.out.println("Press enter to acknowledge");
+                gui.acknowledgeChoice();
             }
         }catch(Exception e){
             System.out.println(e.getMessage());

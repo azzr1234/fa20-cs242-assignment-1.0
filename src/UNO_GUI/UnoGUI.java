@@ -31,6 +31,12 @@ public class UnoGUI {
         }
         System.out.println("The game rotation is: " + direction);
         System.out.println("Please enter any key, and then enter, if you are ready to see your cards.");
+        acknowledgeChoice();
+
+        //System.out.println();
+    }
+
+    public void acknowledgeChoice(){
         BufferedReader rd = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         try {
@@ -38,8 +44,6 @@ public class UnoGUI {
         } catch (IOException e){
             e.printStackTrace();
         }
-
-        //System.out.println();
     }
 
 
