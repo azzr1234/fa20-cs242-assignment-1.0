@@ -20,6 +20,8 @@ public class GameState{
     public boolean directionClockwise;
     public boolean unoSaid;
     public UnoGUI gui;
+    public AI baseAIPlayer;
+    public AI stratAIPlayer;
 
     /**
      * Constructor for a new game of UNO.
@@ -51,6 +53,8 @@ public class GameState{
     public GameState(int numPlayers){
         this.drawDeck = new PlayableDeck();
         this.discardDeck = new DiscardDeck();
+        this.baseAIPlayer = new BaseLineAI(this);
+        this.stratAIPlayer = new StrategicAI(this);
         this.players = createPlayers(numPlayers);
         this.currentPlayer = this.players.get(0);
         this.directionClockwise = true;
@@ -58,6 +62,7 @@ public class GameState{
         this.determineNextPlayer();
         this.initDecks();
         this.gui = new UnoGUI(this);
+
     }
 
     /**
@@ -67,12 +72,21 @@ public class GameState{
      */
     public ArrayList<Player> createPlayers(int numPlayers){
         ArrayList<Player> gamePlayers = new ArrayList<>();
+        //Player addAI = new BaseLineAI(this);
+        this.baseAIPlayer.playerHand.createHand(this.drawDeck, 7);
+        this.baseAIPlayer.updateCardCount();
+        gamePlayers.add(this.baseAIPlayer);
+        //Player addStratAI = new StrategicAI(this);
+        this.stratAIPlayer.playerHand.createHand(this.drawDeck, 7);
+        this.stratAIPlayer.updateCardCount();
+        gamePlayers.add(this.stratAIPlayer);
         for(int playerIndex = 0; playerIndex < numPlayers; playerIndex++){
             Player addPlayer = new Player();
             addPlayer.playerHand.createHand(this.drawDeck, 7);
             addPlayer.updateCardCount();
             gamePlayers.add(addPlayer);
         }
+
         return gamePlayers;
     }
 
@@ -141,7 +155,7 @@ public class GameState{
      * @param p
      * @param validCardsInHand
      */
-    private void doPlayerChoice(Player p, ArrayList<Integer> validCardsInHand){
+    protected void doPlayerChoice(Player p, ArrayList<Integer> validCardsInHand){
         while(true) {
             try {
                 System.out.println("Would you like to play more than one card?(y/n)");
@@ -164,7 +178,7 @@ public class GameState{
         }
     }
 
-    private void playOneCardChoice(Player p, ArrayList<Integer> validCardsInHand){
+    protected void playOneCardChoice(Player p, ArrayList<Integer> validCardsInHand){
         System.out.println("Please Enter the card index. Ex. 3");
         while(true) {
             String[] chosen_index = getSingleCardIndexInput();
@@ -248,7 +262,7 @@ public class GameState{
     /**
      * After determining next Player, the new player should go.
      */
-    private void setNextPlayer(){
+    protected void setNextPlayer(){
         this.currentPlayer = this.nextPlayer;
         determineNextPlayer();
     }
@@ -270,6 +284,7 @@ public class GameState{
                 updateCurrentCard();
                 break;
             case "DrawTwo":
+
                 skippedPlayerDrawNumCard(2);
                 determineNextPlayer();
                 this.currentPlayer = this.nextPlayer;
@@ -287,6 +302,7 @@ public class GameState{
                 this.currentCard = new Card(newColor, "WildDrawFourCard");
 
                 skippedPlayerDrawNumCard(4);
+
                 skipNextPlayer();
                 break;
         }
@@ -485,10 +501,10 @@ public class GameState{
     }
 
     public void sayUno(Player p){
-        if(p.playerHand.getHand().size() == 1){
+        if(p.cardCount == 1){
             System.out.println("UNO!");
+            this.unoSaid = true;
         }
-        this.unoSaid = true;
     }
 
 

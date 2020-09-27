@@ -91,6 +91,7 @@ public class UnoGUI {
     public void printCurrentPlayerCards(){
        System.out.println("Your Cards: ");
        int cardIndex = 0;
+
        for(Card currentCard: this.game.currentPlayer.playerHand.getHand()){
            System.out.println(cardIndex + ": " + currentCard.getColor() + " " + currentCard.getValue());
            cardIndex++;
@@ -101,8 +102,9 @@ public class UnoGUI {
    public void displayUno(){
         if(this.game.unoSaid){
             System.out.println("Player has Uno: " + this.game.players.indexOf(this.game.currentPlayer));
+        }else{
+            System.out.println("Player has Uno: None");
         }
-        System.out.println("Player has Uno: None");
    }
 
 

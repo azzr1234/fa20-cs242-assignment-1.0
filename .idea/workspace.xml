@@ -20,16 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90277cbb-3ca7-4c49-8097-62425e146a95" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/UNO/AI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/fa20-cs242-assignment-1.1/UNO/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fa20-cs242-assignment-1.1/UNO/GameState.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/fa20-cs242-assignment-1.1/UNO_GUI/UnoGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/fa20-cs242-assignment-1.1/UNO_GUI/UnoGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UNO/GamePlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO/GamePlay.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UNO/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/ManualTestPlan.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/ManualTestPlan.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/OpeningStatement.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/PlayedCard.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/PlayedTwoCards.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/PlayerCardTurnDone.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/PlayerTurn.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO_GUI/Manual_Test_Plan/PlayerTurn.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UNO_GUI/UnoGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UNO_GUI/UnoGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,6 +161,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser" timestamp="1601239392582">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="574" y="124" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1601239392582" />
     <state x="499" y="164" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601227241704">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -173,22 +173,22 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="549" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1601078956070" />
-    <state width="1493" height="589" key="GridCell.Tab.0.bottom" timestamp="1601227196102">
+    <state width="1493" height="589" key="GridCell.Tab.0.bottom" timestamp="1601242443116">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="589" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601227196102" />
-    <state width="1493" height="589" key="GridCell.Tab.0.center" timestamp="1601227196102">
+    <state width="1493" height="589" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1601242443116" />
+    <state width="1493" height="589" key="GridCell.Tab.0.center" timestamp="1601242443116">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="589" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1601227196102" />
-    <state width="1493" height="589" key="GridCell.Tab.0.left" timestamp="1601227196102">
+    <state width="1493" height="589" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1601242443116" />
+    <state width="1493" height="589" key="GridCell.Tab.0.left" timestamp="1601242443116">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="589" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1601227196102" />
-    <state width="1493" height="589" key="GridCell.Tab.0.right" timestamp="1601227196102">
+    <state width="1493" height="589" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1601242443116" />
+    <state width="1493" height="589" key="GridCell.Tab.0.right" timestamp="1601242443116">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="589" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1601227196102" />
+    <state width="1493" height="589" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1601242443116" />
     <state width="1493" height="265" key="GridCell.Tab.1.bottom" timestamp="1601095776022">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
