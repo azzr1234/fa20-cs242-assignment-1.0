@@ -21,19 +21,18 @@ public class GamePlay {
     }
 
     public static void main(String[] args){
-        System.out.println("Welcome to UNO! Please input the number of Players with an integer");
+        System.out.println("Welcome to UNO! Please input the number of Players with an integer greater than 2");
         GamePlay play = new GamePlay();
         GameState game =  new GameState(play.getNumPlayers());
-        //System.out.println(game.players.size());
         UnoGUI gui = new UnoGUI(game);
         while(true){
+            gui.printPlayersOrder();
             gui.printCurrentGameState();
             gui.printCurrentPlayerCards();
             game.playTurn(game.currentPlayer);
             if(game.checkForWinner() != null){
                 break;
             }
-            //gui.printPlayersTurn();
         }
         System.out.println("Winner is Player " + game.players.indexOf(game.checkForWinner()));
     }

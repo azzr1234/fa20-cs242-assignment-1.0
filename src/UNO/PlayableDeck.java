@@ -125,7 +125,7 @@ public class PlayableDeck extends Deck{
      */
     public void createWildCards(Stack<Card> d, int count) {
         for (int numWildCards = 0; numWildCards < count; numWildCards++ ) {
-            WildCard wildCard = new WildCard(null);
+            WildCard wildCard = new WildCard("Choose Color");
             d.push(wildCard);
         }
     }
@@ -138,7 +138,7 @@ public class PlayableDeck extends Deck{
      */
     public void createWildDrawFourCards(Stack<Card> d, int count) {
         for (int numWild4Cards = 0; numWild4Cards < count; numWild4Cards++) {
-            WildDrawFourCard wild4Card = new WildDrawFourCard(null);
+            WildDrawFourCard wild4Card = new WildDrawFourCard("Choose Color");
             d.push(wild4Card);
         }
     }

@@ -18,6 +18,7 @@ public class GameState{
     public Player nextPlayer;
     public Card currentCard;
     public boolean directionClockwise;
+    public boolean unoSaid;
     public UnoGUI gui;
 
     /**
@@ -53,6 +54,7 @@ public class GameState{
         this.players = createPlayers(numPlayers);
         this.currentPlayer = this.players.get(0);
         this.directionClockwise = true;
+        this.unoSaid = false;
         this.determineNextPlayer();
         this.initDecks();
         this.gui = new UnoGUI(this);
@@ -96,7 +98,11 @@ public class GameState{
     public void playTurn(Player p){
         ArrayList<Integer> validCardsInHand = hasAnyValidCardCheck(p);
         if(!validCardsInHand.isEmpty()){
-            doPlayerChoice(p, validCardsInHand);
+            if(validCardsInHand.size() >= 2){
+                doPlayerChoice(p, validCardsInHand);
+            }else{
+                playOneCardChoice(p,validCardsInHand);
+            }
             p.updateCardCount();
         }else {
             gui.noValidCardsDrawCards();
@@ -136,31 +142,61 @@ public class GameState{
      * @param validCardsInHand
      */
     private void doPlayerChoice(Player p, ArrayList<Integer> validCardsInHand){
-
-        try{
-            System.out.println("Would you like to play more than one card?(y/n)");
-            String choice = getPlayerChoice();
-            if(!choice.equals("y") || !choice.equals("y")){
-                throw new Exception("Input must be either y or n");
-            }
-            if(choice.equals("y")){
-                System.out.println("Please Enter the card indices seperated by a space. Max 2 cards. Ex. 1 4 ");
-                String[] chosen_indices = getCardIndexInput();
-                if(chosen_indices.length == 2){
-                    playTwoCards(p, validCardsInHand, chosen_indices);
-                }else {
-                    throw new Exception("You have entered an invalid number of cards. Please enter 2 indices.");
+        while(true) {
+            try {
+                System.out.println("Would you like to play more than one card?(y/n)");
+                String choice = getPlayerChoice();
+                if (choice.equals("y") == false && choice.equals("n") == false) {
+                    throw new IOException("Input must be either y or n");
                 }
-            }else if(choice.equals("n")){
-                System.out.println("Please Enter the card index. Ex. 3");
-                String[] chosen_index = getSingleCardIndexInput();
-                playCard(p,validCardsInHand, chosen_index);
+                if (choice.equals("y")) {
+                    playTwoCardsChoice(p, validCardsInHand);
+                } else if (choice.equals("n")) {
 
-            }else{
-                throw new Exception("Please input lower case y, for yes or n, for no");
+                    playOneCardChoice(p, validCardsInHand);
+                } else {
+                    throw new IOException("Please input lower case y, for yes or n, for no");
+                }
+                break;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+        }
+    }
+
+    private void playOneCardChoice(Player p, ArrayList<Integer> validCardsInHand){
+        System.out.println("Please Enter the card index. Ex. 3");
+        while(true) {
+            String[] chosen_index = getSingleCardIndexInput();
+            try {
+                if (!validCardsInHand.contains(Integer.parseInt(chosen_index[0]))) {
+                    throw new IOException("You have entered an invalid of cards to play. Please enter valid index.");
+                } else {
+                    playCard(p, validCardsInHand, chosen_index);
+                }
+                break;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+    private void playTwoCardsChoice(Player p, ArrayList<Integer> validCardsInHand){
+        System.out.println("Please Enter the card indices seperated by a space. Max 2 cards. Ex. 1 4 ");
+        while(true) {
+            String[] chosen_indices = getCardIndexInput();
+            try {
+                if (!validCardsInHand.contains(Integer.parseInt(chosen_indices[0])) || !validCardsInHand.contains(Integer.parseInt(chosen_indices[1]))) {
+
+                    throw new IOException("You have entered an invalid of cards to play. Please enter 2 indices.");
+                } else {
+                    playTwoCards(p, validCardsInHand, chosen_indices);
+                }
+                break;
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -214,6 +250,7 @@ public class GameState{
      */
     private void setNextPlayer(){
         this.currentPlayer = this.nextPlayer;
+        determineNextPlayer();
     }
 
 
@@ -242,6 +279,7 @@ public class GameState{
             case "WildCard":
                 String newColor = getColorChange();
                 this.currentCard = new Card(newColor, "WildCard");
+
                 //this.discardDeck.pe
                 break;
             case "WildDrawFourCard":
@@ -337,26 +375,22 @@ public class GameState{
      * @return ArrayList with card indexes
      */
     public ArrayList<Integer> hasAnyValidCardCheck(Player p){
-        //ArrayList<Card> playersHand= p.playerHand.getHand();
-        //Iterator<Card> iter = p.playerHand.getHand().iterator();
         ArrayList<Integer> allValidCards = new ArrayList<>();
-        //System.out.println("here");
-        //System.out.println(p.cardCount);
+
         int cardIndex = 0;
         for(Card checkCard : p.playerHand.getHand()){
-            //System.out.println(cardIndex);
-            //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
+
             try{
-                if(checkCard.getColor() == null){
+                if(checkCard.getValue().equals("WildCard") || checkCard.getValue().equals("WildDrawFourCard") ){
                     allValidCards.add(cardIndex);
                 }
-                if (checkCard.getColor().equals(this.discardDeck.peek().getColor()) ||
-                        checkCard.getValue().equals(this.discardDeck.peek().getValue())) {
-                    //System.out.println(p.playerHand.getHand().get(cardIndex).getColor());
+                if (checkCard.getColor().equals(this.currentCard.getColor()) ||
+                        checkCard.getValue().equals(this.currentCard.getValue())) {
+
                     allValidCards.add(cardIndex);
                 }
             }catch(NullPointerException e){
-                //System.out.println(e.getMessage());
+
             }
 
             cardIndex++;
@@ -425,14 +459,14 @@ public class GameState{
     public void skippedPlayerDrawNumCard(int numCardsToTake){
         Player nextInLine;
         int currentPlayerRotationPlace = this.players.indexOf(this.currentPlayer);
-        if(directionClockwise)
-            if(currentPlayerRotationPlace == players.size() - 1){
-                nextInLine = this.players.get(this.players.indexOf(0));
+        if(this.directionClockwise)
+            if(currentPlayerRotationPlace == (players.size() - 1)){
+                nextInLine = this.players.get(0);
             }else{
                 nextInLine = this.players.get(this.players.indexOf(currentPlayer) + 1);
         }else{
             if(currentPlayerRotationPlace == 0){
-                nextInLine = this.players.get(this.players.indexOf(this.players.size() - 1));
+                nextInLine = this.players.get(this.players.size() - 1);
             }else{
                 nextInLine = this.players.get(this.players.indexOf(currentPlayer) - 1);
             }
@@ -447,6 +481,7 @@ public class GameState{
         if(p.playerHand.getHand().size() == 1){
             System.out.println("UNO!");
         }
+        this.unoSaid = true;
     }
 
 
