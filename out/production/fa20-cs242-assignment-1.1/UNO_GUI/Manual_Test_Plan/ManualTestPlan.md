@@ -14,6 +14,7 @@ Make sure to input an integer.
 **Player's Turn**<br/>
 After the game has started the first player will be told to initiate their turn.
 When it is your a turn to play you will be prompted as such,<br/>
+<br/>
 ![PlayerTurn](PlayerTurn.png )<br/>
 After you press Enter, you will be shown you cards.<br/>
 ![ShowCards](ShowCards.png)<br/>
@@ -42,6 +43,12 @@ This completes your turn, and is now the next players turn.
 If you play an invalid card you will get a message as such,<br/>
 ![InvalidCard](InvalidCard.png)<br/>
 <br/>
+<br/>
+When it is the AI's turn to play, you will be prompted to press enter and their turn will be played.<br/>
+![Baseline](Baseline.png)<br/>
+
+![Strategic](StrategicAI.png)<br/>
+
 <br/>
 
 
